@@ -2,8 +2,9 @@
 //Required
 var gulp = require ('gulp'),
 	uglify = require ('gulp-uglify');
-	compass = require ('gulp-compass');
+	// compass = require ('gulp-compass');
 	rename = require('gulp-rename');
+	sass = require('gulp-sass');
 
 
 //Scripts Task
@@ -16,23 +17,19 @@ gulp.task('scripts', function(){
 });
 
 //Compass / Sass Tasks
-gulp.task('compass', function(){
-	gulp.src('app/scss/style.scss')
-		.pipe(compass({
-			config_file: 'config.rb',
-			css: 'app/css',
-			sass: 'app.scss'
-		}))
-		.pipe(gulp.dest('app/css'));
+gulp.task('styles', function() {
+    gulp.src('./app/sass/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('./app/css/'));
 });
 
 //Watch Tasks
 gulp.task('watch', function(){
 	gulp.watch('app/js/**/*.js', ['scripts']);
-	gulp.watch('app/scss/**/*.scss', ['compass']);
+	gulp.watch('app/sass/**/*.scss',['styles']);
 });
 
 
 //Default Task
-gulp.task('default', ['scripts', 'watch', 'compass' ]);
+gulp.task('default', ['styles', 'scripts', 'watch']);
 

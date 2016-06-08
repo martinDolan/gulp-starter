@@ -1,1 +1,5 @@
-@import "ui/base";
+h1 {
+  color: #fff; }
+
+.test {
+  color: red; }
